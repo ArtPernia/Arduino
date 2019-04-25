@@ -7,19 +7,21 @@
    * plano justo después.
    */
    
-
+#include <AltSoftSerial.h>
 char incomingByte = 0;
 char delimiter = '-';
 int i;
 int count = 0;
 int restoBytes;
 int control;
-
+//utilizr la funcion write al enviar datos en vez de print
 byte bloque[16];// bloques que vamos a encryptar
-
+AltSoftSerial altSerial;
 
 void setup() {
   Serial.begin(9600);
+  Serial.println("AltSoftSerial Test Begin");
+  altSerial.begin(9600);
 }
 
 void loop() {
@@ -38,8 +40,8 @@ void loop() {
             //guardar el bloque en una variable o enviarlo
             
             // Debug
-            Serial.println("Valores enviados: ");
-            for (i = 0; i<16; i++){Serial.println((char)bloque[i]);}
+            //Serial.println("Valores enviados: ");
+            //for (i = 0; i<16; i++){altSerial.println((char)bloque[i]);}
             //
             break;
           }
@@ -49,18 +51,18 @@ void loop() {
           
           //Debug
          
-          Serial.println("Recibido: ");
-          Serial.println(incomingByte);
-          Serial.println(bloque[count]);
+          //altSerial.println("Recibido: ");
+          altSerial.print(incomingByte);
+          //altSerial.println(bloque[count]);
           count++;
           
           if (count == 16) {// si el array esta lleno se reinicia el contador para sobreescribirlo
             count = 0;
             //Debug
-            Serial.println("Array de valores almacenados: ");
+              //altSerial.println("Array de valores almacenados: ");
             for (i = 0; i<16; i++)
             {
-              Serial.println((char)bloque[i]);
+              //altSerial.println((char)bloque[i]);
             }
             
              //procesar el array con el bloque (encrypt)
